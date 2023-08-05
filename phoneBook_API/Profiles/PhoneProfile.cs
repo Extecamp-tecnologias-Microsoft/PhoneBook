@@ -8,6 +8,7 @@ namespace phoneBook_API.Profiles
     {
         public PhoneProfile() {
             CreateMap<PhoneDTO, Phone>();
+            CreateMap<UpdatePhoneDTO, Phone>();
         }
     }
 }

@@ -56,7 +56,7 @@ namespace phoneBook_API.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult UpdateContact(string id, [FromBody] PhoneDTO phoneDTO)
+        public IActionResult UpdateContact(string id, [FromBody] UpdatePhoneDTO phoneDTO)
         {
             var phone = listById(id);
 
@@ -73,6 +73,7 @@ namespace phoneBook_API.Controllers
                 phoneDTO.ContactName ??= phone.ContactName;
 
                 _mapper.Map(phoneDTO, phone);
+                _context.SaveChanges();
                 return Ok("Contato Editado");
             }
             catch (Exception ex)
