@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\phoneBook_API.props" />
+</Project>
