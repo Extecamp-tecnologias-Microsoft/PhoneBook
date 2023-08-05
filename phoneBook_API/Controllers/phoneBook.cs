@@ -1,37 +1,51 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using phoneBook_API.Data.Context;
+using phoneBook_API.Data.DTO;
 using phoneBook_API.Models;
 
 namespace phoneBook_API.Controllers
 {
+    [ApiController]
+    [Route("[controller]")]
     public class phoneBook : Controller
     {
-        List<Phone> phones = new List<Phone>();
+        private PhoneContext _context;
+        private IMapper _mapper;
 
+        public phoneBook(PhoneContext context, IMapper mapper)
+        {
+            _context = context;
+            _mapper = mapper;
+        }   
 
         [HttpPost]
-        public IActionResult addContact([FromBody] Phone phone)
+        public IActionResult addContact([FromBody] PhoneDTO phoneDTO)
         {
+            Phone phone = _mapper.Map<Phone>(phoneDTO);
+
             if(verifyIfPhoneAlreadyExists(phone.PhoneNumber) == null)
             {
-                return NotFound("Contato não encontrado");
+                _context.Phones.Add(phone);
+                _context.SaveChanges();
+                return Ok(phone);
             }
             else
             {
-                phones.Add(phone);
-                return Ok(phone);
+                return BadRequest("Contato já existe");
             }
         }
 
         [HttpGet]
         public IEnumerable<Phone> getAllContactsOfList([FromQuery] int skip = 0, [FromQuery] int take = 10)
         {
-            return phones.Skip(skip).Take(take).ToList();
+            return _context.Phones.Skip(skip).Take(take).ToList();
         }
 
         [HttpGet("{id}")]
         public IActionResult getContact(string id)
         {
-            var phone = phones.FirstOrDefault(phone => phone.Id == id);
+            var phone = listById(id);
 
             if(phone == null)
             {
@@ -42,22 +56,23 @@ namespace phoneBook_API.Controllers
         }
 
         [HttpPatch("{id}")]
-        public IActionResult UpdateContact(string id, [FromBody] Phone phone)
+        public IActionResult UpdateContact(string id, [FromBody] PhoneDTO phoneDTO)
         {
-            var phoneExists = listById(id);
+            var phone = listById(id);
 
-            if (phoneExists == null)
+            if (phone == null)
             {
                 return NotFound("Contato não encontrado.");
             }
 
             try
             {
-                phone.PhoneNumber ??= phoneExists.PhoneNumber;
-                phone.AlternativePhone ??= phoneExists.AlternativePhone;
-                phone.Description ??= phoneExists.Description;
-                phone.ContactName ??= phoneExists.ContactName;
+                phoneDTO.PhoneNumber ??= phone.PhoneNumber;
+                phoneDTO.AlternativePhone ??= phone.AlternativePhone;
+                phoneDTO.Description ??= phone.Description;
+                phoneDTO.ContactName ??= phone.ContactName;
 
+                _mapper.Map(phoneDTO, phone);
                 return Ok("Contato Editado");
             }
             catch (Exception ex)
@@ -78,7 +93,8 @@ namespace phoneBook_API.Controllers
 
             try
             {
-                phones.Remove(phoneExists);
+                _context.Phones.Remove(phoneExists);
+                _context.SaveChanges();
                 return Ok("Contato Excluído");
             }
             catch (Exception ex)
@@ -90,11 +106,11 @@ namespace phoneBook_API.Controllers
 
         private Phone listById(string id)
         {
-            return phones.FirstOrDefault(phone => phone.Id == id);
+            return _context.Phones.FirstOrDefault(phone => phone.Id == id);
         }
         private Phone verifyIfPhoneAlreadyExists(string phoneNumber)
         {
-            return phones.FirstOrDefault(phone => phone.PhoneNumber == phoneNumber);
+            return _context.Phones.FirstOrDefault(phone => phone.PhoneNumber == phoneNumber);
         }
     }
 }

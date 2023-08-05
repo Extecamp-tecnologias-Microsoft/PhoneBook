@@ -1,4 +1,11 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Sqlite;
+using phoneBook_API.Data.Context;
+
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("PhoneConnection");
+builder.Services.AddDbContext<PhoneContext>(opts => opts.UseSqlite(connectionString));
 
 // Add services to the container.
 
