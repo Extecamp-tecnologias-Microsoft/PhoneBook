@@ -2,7 +2,7 @@
 
 This is a simple API for managing phone contacts in a phone book. It allows you to add, retrieve, update, and delete contacts.
 
-## Table of Contents
+## Table of Contents 📰
 
 - Introduction
 - Technologies Used
@@ -15,11 +15,11 @@ This is a simple API for managing phone contacts in a phone book. It allows you 
   - Delete Contact
 - License
 
-## Introduction
+## Introduction 🎁
 
 The PhoneBook API provides a straightforward way to manage phone contacts. You can add, retrieve, update, and delete contacts using the provided endpoints.
 
-## Technologies Used
+## Technologies Used ⚙
 
 - ASP.NET Core
 - Entity Framework Core
@@ -35,7 +35,7 @@ Getting Started
 
 ## Endpoints
 
-### Add Contact
+### Add Contact ☑
 
 Add a new contact to the phone book.
 
@@ -52,7 +52,7 @@ Add a new contact to the phone book.
 }
 ```
 
-### Get All Contacts
+### Get All Contacts 🛄
 
 Retrieve a list of all contacts in the phone book.
 
@@ -62,7 +62,7 @@ Retrieve a list of all contacts in the phone book.
   - skip (optional): Number of contacts to skip (default: 0).
   - take (optional): Number of contacts to take (default: 10).
 
-### Get Contact by ID
+### Get Contact by ID 🛅
 
 Retrieve a contact by its ID.
 
@@ -71,7 +71,7 @@ Retrieve a contact by its ID.
 - URL Parameters:
   - id: ID of the contact to retrieve.
 
-### Update Contact
+### Update Contact 🔄
 
 Update an existing contact.
 
@@ -90,7 +90,7 @@ Update an existing contact.
 }
 ```
 
-### Delete Contact
+### Delete Contact 🗑
 
 Delete a contact from the phone book.
 
@@ -99,6 +99,6 @@ Delete a contact from the phone book.
 - URL Parameters:
   - id: ID of the contact to delete.
 
-## License
+## License 📝
 
 This project is licensed under the MIT License. Feel free to use and modify the code as per the terms of the license.
