@@ -51,6 +51,7 @@ Add a new contact to the phone book.
   "contactName": "John Doe"
 }
 ```
+- "alternativePhone" is optional
 
 ### Get All Contacts 🛄
 
