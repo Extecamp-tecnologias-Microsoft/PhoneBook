@@ -13,7 +13,6 @@ This is a simple API for managing phone contacts in a phone book. It allows you 
   - Get Contact by ID
   - Update Contact
   - Delete Contact
-- License
 
 ## Introduction 🎁
 
@@ -99,7 +98,3 @@ Delete a contact from the phone book.
 - Method: DELETE
 - URL Parameters:
   - id: ID of the contact to delete.
-
-## License 📝
-
-This project is licensed under the MIT License. Feel free to use and modify the code as per the terms of the license.
